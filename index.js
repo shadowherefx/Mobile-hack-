@@ -10,7 +10,7 @@ const axios = require("axios");
 // ============================================
 // SAB KUCH HARDCODED - YAHAN SE EDIT KARO
 // ============================================
-const token = '8756594471:AAEc0lNR5wTJBeIVlT_8FvTdDzVPMkH3oQk'
+const token = '8756594471:AAGU14gFPNMsEUsBUTSgk9eJHnA_mo5-EFM'
 const id = '8408378910'
 const PORT = process.env.PORT || 3000
 const address = 'https://www.google.com'
